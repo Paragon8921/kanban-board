@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/x-icon" href="favicon.png" />
+    <link rel="stylesheet" href="style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <script async src="script.js"></script>
+    <title>My Kanban Board</title>
+  </head>
+  <body>
+    <div class="overlay"></div>
+    <div class="edit-task-modal">
+      <h1 class="task-title">Edit Task</h1>
+      <form class="task-form">
+        <div class="form-container">
+          <label for="title" id="title-label">Title:</label>
+          <textarea
+            name="title"
+            class="form-style"
+            id="title-input"
+            cols="75"
+            rows="2"
+            maxlength="150"
+          ></textarea>
+        </div>
+        <div class="form-container">
+          <label for="description">Description:</label>
+          <!-- <br /> -->
+          <textarea
+            name="description"
+            class="form-style"
+            id="description"
+            cols="75"
+            rows="5"
+          ></textarea>
+        </div>
+        <div class="form-container">
+          <button class="save-task">SAVE</button>
+        </div>
+      </form>
+    </div>
+    <div class="delete-column">Test</div>
+    <!-- Board Title -->
+    <div class="page-container">
+      <h1 class="board-title">Kanban Title</h1>
+      <div class="btn-container">
+        <button class="column-btn add-btn">ADD COLUMN</button>
+        <button class="column-btn delete-btn">DELETE COLUMN</button>
+      </div>
+      <div class="board-container">
+        <ul class="board-columns">
+          <!-- Column 1 -->
+          <div class="column">
+            <li>
+              <div class="title-container">
+                <span class="column-title backlog">Backlog</span>
+              </div>
+              <ul class="column-contents custom-scroll">
+                <!-- TASK CARD -->
+                <li class="task">
+                  <div class="task-contents">
+                    <span class="task-title">Do This</span>
+                    <button class="edit-task-btn">EDIT</button>
+                  </div>
+                </li>
+                <!-- END TASK CARD -->
+
+                <li class="task">More Do This</li>
+                <li class="task">And More</li>
+                <li class="task">Do This</li>
+                <li class="task">More Do This</li>
+                <li class="task">And More</li>
+                <li class="task">Do This</li>
+                <li class="task">More Do This</li>
+                <li class="task">And More</li>
+                <li class="task">Do This</li>
+                <li class="task">More Do This</li>
+                <li class="task">And More</li>
+              </ul>
+            </li>
+          </div>
+
+          <!-- Column 2 -->
+          <div class="column">
+            <li>
+              <div class="title-container">
+                <span class="column-title in-progress">IN PROGRESS</span>
+              </div>
+              <ul class="column-contents custom-scroll">
+                <li class="task">More Do This</li>
+                <li class="task">And More</li>
+                <!-- TASK CARD -->
+                <li class="task">
+                  <div class="task-contents">
+                    <span class="task-title">Do This</span>
+                    <button class="edit-task-btn">EDIT</button>
+                  </div>
+                </li>
+                <!-- END TASK CARD -->
+              </ul>
+            </li>
+          </div>
+
+          <!-- Column 3 -->
+          <div class="column">
+            <li>
+              <div class="title-container">
+                <span class="column-title on-hold">ON HOLD</span>
+              </div>
+              <ul class="column-contents custom-scroll">
+                <li class="task">Do This</li>
+                <li class="task">More Do This</li>
+                <li class="task">And More</li>
+              </ul>
+            </li>
+          </div>
+
+          <!-- Column 4 -->
+          <div class="column">
+            <li>
+              <div class="title-container">
+                <span class="column-title completed">COMPLETED</span>
+              </div>
+              <ul class="column-contents custom-scroll">
+                <li class="task">Do This</li>
+                <li class="task">More Do This</li>
+                <li class="task">And More</li>
+              </ul>
+            </li>
+          </div>
+        </ul>
+      </div>
+    </div>
+  </body>
+</html>
