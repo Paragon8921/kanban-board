@@ -45,7 +45,21 @@ body {
   background: white;
   border-radius: 10px;
   border: 10px solid rgb(51, 80, 154);
+  background: rgb(179, 176, 176);
   z-index: 2;
+}
+
+.fa-xmark{
+  float: right;
+  padding-right: 2rem;
+}
+
+.fa-xmark:hover{
+  transform:scale(1.2)
+}
+
+.fa-xmark:active{
+  transform:scale(.8)
 }
 
 .form-style {
@@ -70,6 +84,10 @@ body {
   background: rgba(44, 133, 50, 0.605);
   border: none;
   border-radius: 10px;
+}
+
+.delete-column {
+  justify-content: space-evenly;
 }
 
 /* CUSTOM SCROLLBARS */

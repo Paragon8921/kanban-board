@@ -12,6 +12,7 @@
       href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;700&display=swap"
       rel="stylesheet"
     />
+    <script src="https://kit.fontawesome.com/0043278b50.js" crossorigin="anonymous"></script>
     <script async src="script.js"></script>
     <title>My Kanban Board</title>
   </head>
@@ -47,7 +48,24 @@
         </div>
       </form>
     </div>
-    <div class="delete-column">Test</div>
+    <div class="delete-column">
+      <div class="column-item column-title backlog">
+        <span>BACKLOG</span>
+        <i class="fa-solid fa-xmark"></i>
+      </div>
+      <div class="column-item column-title in-progress">
+        <span>IN PROGRESS</span>
+        <i class="fa-solid fa-xmark"></i>
+      </div>
+      <div class="column-item column-title on-hold">
+        <span>ON HOLD</span>
+        <i class="fa-solid fa-xmark"></i>
+      </div>
+      <div class="column-item column-title completed">
+        <span>COMPLETED</span>
+        <i class="fa-solid fa-xmark"></i>      
+      </div>
+    </div>
     <!-- Board Title -->
     <div class="page-container">
       <h1 class="board-title">Kanban Title</h1>
@@ -61,7 +79,7 @@
           <div class="column">
             <li>
               <div class="title-container">
-                <span class="column-title backlog">Backlog</span>
+                <span class="column-title backlog">BACKLOG</span>
               </div>
               <ul class="column-contents custom-scroll">
                 <!-- TASK CARD -->
