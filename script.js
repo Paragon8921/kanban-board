@@ -10,25 +10,6 @@ const saveTaskBtn = document.querySelector('.save-task');
 const deleteColumnBtn = document.querySelector('.delete-btn');
 const deleteColumnModal = document.querySelector('.delete-column');
 
-
-// Set the board title to an empty string and make it editable
-title.addEventListener('click', ()=> {
-  title.textContent = '';
-  title.setAttribute('contenteditable', true);
-})
-
-// event listeners for title
-title.addEventListener('keydown', e => {
-  // prevents a new line from being created on editable content
-  if (e.key === 'Enter') {
-    e.preventDefault();
-  }
-
-  if (title.textContent.length >= 20) {
-    title.setAttribute('contenteditable', false);
-  }
-});
-
 ////////////////////////////////////////////////////////////
 // Pop-Up Modals and Overlay
 ///////////////////////////////////////////////////////////
@@ -71,3 +52,42 @@ deleteColumnBtn.addEventListener('click', displayDeleteModal);
 //     `Title: ${taskTitle.value} - Description: ${taskDescription.value}`
 //   );
 // });
+
+function setTitle() {
+  localStorage.setItem('boardTitle', title.textContent);
+}
+
+function loadTitle() {
+  if (localStorage.getItem('boardTitle')) {
+    title.textContent = localStorage.getItem('boardTitle');
+  }
+}
+
+// EVENT LISTENERS for board title
+// Set the board title to an empty string and make it editable
+title.addEventListener('click', () => {
+  title.textContent = '';
+  title.setAttribute('contenteditable', true);
+});
+
+title.addEventListener('blur', () => {
+  setTitle();
+});
+
+// event listeners for title
+title.addEventListener('keydown', e => {
+  // prevents a new line from being created on editable content
+  if (e.key === 'Enter') {
+    e.preventDefault();
+    setTitle();
+    title.blur();
+  }
+
+  if (title.textContent.length >= 50) {
+    title.setAttribute('contenteditable', false);
+    setTitle();
+  }
+});
+
+// On Load
+loadTitle();
