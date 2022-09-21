@@ -12,8 +12,11 @@
       href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;700&display=swap"
       rel="stylesheet"
     />
-    <script src="https://kit.fontawesome.com/0043278b50.js" crossorigin="anonymous"></script>
-    <script async src="script.js"></script>
+    <script
+      src="https://kit.fontawesome.com/0043278b50.js"
+      crossorigin="anonymous"
+    ></script>
+    <script defer src="script.js"></script>
     <title>My Kanban Board</title>
   </head>
   <body>
@@ -44,7 +47,7 @@
           ></textarea>
         </div>
         <div class="form-container">
-          <button class="save-task">SAVE</button>
+          <button class="save-task">SAVE</butt>
         </div>
       </form>
     </div>
@@ -63,12 +66,13 @@
       </div>
       <div class="column-item column-title completed">
         <span>COMPLETED</span>
-        <i class="fa-solid fa-xmark"></i>      
+        <i class="fa-solid fa-xmark"></i>
       </div>
     </div>
     <!-- Board Title -->
     <div class="page-container">
-      <h1 class="board-title">Kanban Title</h1>
+      <div class="board-title">Kanban Title</div>
+      
       <div class="btn-container">
         <button class="column-btn add-btn">ADD COLUMN</button>
         <button class="column-btn delete-btn">DELETE COLUMN</button>
@@ -77,34 +81,36 @@
         <ul class="board-columns">
           <!-- Column 1 -->
           <div class="column">
+            <div class="title-container">
+              <span class="column-title backlog">BACKLOG</span>
+            </div>
             <li>
-              <div class="title-container">
-                <span class="column-title backlog">BACKLOG</span>
+              <div class="column-contents custom-scroll">
+                <ul>
+                  <!-- TASK CARD -->
+                  <li class="task">
+                    <div class="task-contents">
+                      <span class="task-title">Do This</span>
+                      <button class="edit-task-btn">EDIT</button>
+                    </div>
+                  </li>
+                  <!-- END TASK CARD -->
+  
+                  <li class="task">More Do This</li>
+                  <li class="task">And More</li>
+                  <li class="task">Do This</li>
+                  <li class="task">More Do This</li>
+                  <li class="task">And More</li>
+                  <li class="task">Do This</li>
+                  <li class="task">More Do This</li>
+                  <li class="task">And More</li>
+                  <li class="task">Do This</li>
+                  <li class="task">More Do This</li>
+                  <li class="task">And More</li>
+                </ul>
               </div>
-              <ul class="column-contents custom-scroll">
-                <!-- TASK CARD -->
-                <li class="task">
-                  <div class="task-contents">
-                    <span class="task-title">Do This</span>
-                    <button class="edit-task-btn">EDIT</button>
-                  </div>
-                </li>
-                <!-- END TASK CARD -->
-
-                <li class="task">More Do This</li>
-                <li class="task">And More</li>
-                <li class="task">Do This</li>
-                <li class="task">More Do This</li>
-                <li class="task">And More</li>
-                <li class="task">Do This</li>
-                <li class="task">More Do This</li>
-                <li class="task">And More</li>
-                <li class="task">Do This</li>
-                <li class="task">More Do This</li>
-                <li class="task">And More</li>
-              </ul>
             </li>
-          </div>
+            </div>
 
           <!-- Column 2 -->
           <div class="column">

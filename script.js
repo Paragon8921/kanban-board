@@ -10,31 +10,64 @@ const saveTaskBtn = document.querySelector('.save-task');
 const deleteColumnBtn = document.querySelector('.delete-btn');
 const deleteColumnModal = document.querySelector('.delete-column');
 
-// SHOW EDIT TASK MODAL when any "Edit" button is clicked
-editTask.forEach(button => {
-  button.addEventListener('click', () => {
-    overlay.style.display = 'block';
-    editTaskModal.style.display = 'flex';
-  });
+
+// Set the board title to an empty string and make it editable
+title.addEventListener('click', ()=> {
+  title.textContent = '';
+  title.setAttribute('contenteditable', true);
+})
+
+// event listeners for title
+title.addEventListener('keydown', e => {
+  // prevents a new line from being created on editable content
+  if (e.key === 'Enter') {
+    e.preventDefault();
+  }
+
+  if (title.textContent.length >= 20) {
+    title.setAttribute('contenteditable', false);
+  }
 });
 
-// HIDE OVERLAY and pop-up MODALS
-overlay.addEventListener('click', () => {
+////////////////////////////////////////////////////////////
+// Pop-Up Modals and Overlay
+///////////////////////////////////////////////////////////
+
+// DISPLAY the Edit Task Modal and Overlay
+function displayEditModal() {
+  overlay.style.display = 'block';
+  editTaskModal.style.display = 'flex';
+}
+
+// DISPLAY the delete column Modal and Overlay
+function displayDeleteModal() {
+  deleteColumnModal.style.display = 'flex';
+  overlay.style.display = 'block';
+}
+
+// HIDE the Modals and Overlay
+function hideModal() {
   overlay.style.display = 'none';
   editTaskModal.style.display = 'none';
   deleteColumnModal.style.display = 'none';
+}
+
+// SHOW EDIT TASK MODAL when any "Edit" button is clicked
+editTask.forEach(button => {
+  button.addEventListener('click', displayEditModal);
 });
 
-// GET FORM DATA ON SAVE BUTTON
-saveTaskBtn.addEventListener('click', e => {
-  // e.preventDefault();
-  console.log(
-    `Title: ${taskTitle.value} - Description: ${taskDescription.value}`
-  );
-});
+// HIDE OVERLAY and pop-up MODALS
+overlay.addEventListener('click', hideModal);
 
 // SHOW DELETE COLUMN pop-up MODAL
-deleteColumnBtn.addEventListener('click', () => {
-  deleteColumnModal.style.display = 'flex';
-  overlay.style.display = 'block';
-});
+deleteColumnBtn.addEventListener('click', displayDeleteModal);
+/////////////////////////////////////////////////////////////////
+
+// GET FORM DATA ON SAVE BUTTON
+// saveTaskBtn.addEventListener('click', e => {
+//   e.preventDefault();
+//   console.log(
+//     `Title: ${taskTitle.value} - Description: ${taskDescription.value}`
+//   );
+// });
