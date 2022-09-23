@@ -1,14 +1,15 @@
 const title = document.querySelector('.board-title');
 const columnList = document.querySelectorAll('.column');
-const addTaskBtn = document.querySelector('.add-btn');
+const addTaskBtn = document.querySelector('.add_btn');
 const overlay = document.querySelector('.overlay');
 const editTask = document.querySelectorAll('.edit-task-btn');
 const editTaskModal = document.querySelector('.edit-task-modal');
 const taskTitle = document.getElementById('title-input');
 const taskDescription = document.getElementById('description');
 const saveTaskBtn = document.querySelector('.save-task');
-const deleteColumnBtn = document.querySelector('.delete-btn');
+const deleteColumnBtn = document.querySelector('.delete_btn');
 const deleteColumnModal = document.querySelector('.delete-column');
+const boardColumnsEl = document.querySelector('.board-columns');
 
 ////////////////////////////////////////////////////////////
 // Pop-Up Modals and Overlay
@@ -45,6 +46,19 @@ overlay.addEventListener('click', hideModal);
 deleteColumnBtn.addEventListener('click', displayDeleteModal);
 /////////////////////////////////////////////////////////////////
 
+// Add Column
+function addColumn() {
+  const div = document.createElement('div');
+  div.className = 'column';
+  div.innerHTML = `
+  <li>
+    <div class="title-container">
+      <span class="column-title completed">NEW COLUMN</span>
+    </div>
+  </li>`;
+  boardColumnsEl.append(div);
+}
+
 // GET FORM DATA ON SAVE BUTTON
 // saveTaskBtn.addEventListener('click', e => {
 //   e.preventDefault();
@@ -63,12 +77,13 @@ function loadTitle() {
   }
 }
 
+function editElement(e) {
+  e.setAttribute('contenteditable', true);
+}
+
 // EVENT LISTENERS for board title
 // Set the board title to an empty string and make it editable
-title.addEventListener('click', () => {
-  title.textContent = '';
-  title.setAttribute('contenteditable', true);
-});
+title.addEventListener('click', editElement(title));
 
 function setTitleEvent() {
   if (title.textContent.length === 0) {
@@ -93,6 +108,9 @@ title.addEventListener('keydown', e => {
     setTitle();
   }
 });
+
+// Add Column Event Listner
+addTaskBtn.addEventListener('click', addColumn);
 
 // On Load
 loadTitle();

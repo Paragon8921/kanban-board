@@ -248,10 +248,10 @@ body {
   transform: scale(0.9);
 }
 
-.add-btn {
+.add_btn {
   background: #458a9f;
 }
 
-.delete-btn {
+.delete_btn {
   background: #9f4545;
 }
