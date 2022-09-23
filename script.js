@@ -70,17 +70,22 @@ title.addEventListener('click', () => {
   title.setAttribute('contenteditable', true);
 });
 
-title.addEventListener('blur', () => {
+function setTitleEvent() {
+  if (title.textContent.length === 0) {
+    loadTitle();
+  }
   setTitle();
-});
+  title.blur();
+}
+
+title.addEventListener('blur', setTitleEvent);
 
 // event listeners for title
 title.addEventListener('keydown', e => {
   // prevents a new line from being created on editable content
   if (e.key === 'Enter') {
     e.preventDefault();
-    setTitle();
-    title.blur();
+    setTitleEvent();
   }
 
   if (title.textContent.length >= 50) {

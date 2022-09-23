@@ -123,10 +123,10 @@ body {
   font-size: 3em;
   font-family: 'Ubuntu', sans-serif;
   font-weight: bold;
-  display: inline-block;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  border: none;
 }
 
 .board-columns {
@@ -135,7 +135,7 @@ body {
   gap: 1rem;
   padding: 1em;
   width: 100%;
-  height: 88vh;
+  height: 85vh;
 }
 
 .board-container {
@@ -165,7 +165,7 @@ body {
 .column-contents {
   /* height: 100%; */
   overflow-y: auto;
-  height: 74vh;
+  height: 70vh;
 }
 
 .title-container {
