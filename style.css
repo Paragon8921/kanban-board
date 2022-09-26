@@ -28,7 +28,7 @@ body {
   cursor: pointer;
 }
 
-/* EDIT TAKS FORM */
+/* EDIT TASKS FORM */
 .delete-column,
 .edit-task-modal {
   display: none;
@@ -174,6 +174,23 @@ body {
   padding: 0.8rem;
 }
 
+.add_task {
+  text-align: center;
+  padding: .1rem .5rem;
+  background-color: #3f4298;
+  color: white;
+  border-radius: 10px;
+  font-size: 1.2rem;
+  font-family: 'Ubuntu', sans-serif;
+  border: none;
+  width: 8rem;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 0 2px 1px black;
+}
+
+/* PLACEHOLDER COLUMN COLORS */
+
 .backlog {
   background: rgba(207, 52, 52, 0.2);
 }
@@ -238,13 +255,15 @@ body {
 
 .column-btn:hover,
 .edit-task-btn:hover,
-.save-task:hover {
+.save-task:hover,
+.add_task:hover {
   transform: scale(1.03);
 }
 
 .column-btn:active,
 .edit-task-btn:active,
-.save-task:active {
+.save-task:active,
+.add_task:active {
   transform: scale(0.9);
 }
 

@@ -1,15 +1,22 @@
 const title = document.querySelector('.board-title');
 const columnList = document.querySelectorAll('.column');
-const addTaskBtn = document.querySelector('.add_btn');
+const addColBtn = document.querySelector('.add_btn');
+const addTaskBtn = document.querySelectorAll('.add_task');
 const overlay = document.querySelector('.overlay');
 const editTask = document.querySelectorAll('.edit-task-btn');
 const editTaskModal = document.querySelector('.edit-task-modal');
 const taskTitle = document.getElementById('title-input');
+const editTaskTitle = document.querySelector('.task-title');
 const taskDescription = document.getElementById('description');
 const saveTaskBtn = document.querySelector('.save-task');
 const deleteColumnBtn = document.querySelector('.delete_btn');
 const deleteColumnModal = document.querySelector('.delete-column');
 const boardColumnsEl = document.querySelector('.board-columns');
+const columnArray = [];
+
+let taskType = '';
+
+let columnTitles = [];
 
 ////////////////////////////////////////////////////////////
 // Pop-Up Modals and Overlay
@@ -19,6 +26,11 @@ const boardColumnsEl = document.querySelector('.board-columns');
 function displayEditModal() {
   overlay.style.display = 'block';
   editTaskModal.style.display = 'flex';
+  if (taskType === 'edit') {
+    editTaskTitle.textContent = 'EDIT TASK';
+  } else {
+    editTaskTitle.textContent = 'NEW TASK';
+  }
 }
 
 // DISPLAY the delete column Modal and Overlay
@@ -34,9 +46,20 @@ function hideModal() {
   deleteColumnModal.style.display = 'none';
 }
 
+// SHOW NEW TASK MODAL when any "Add Task" button is clicked
+addTaskBtn.forEach(function (newTask) {
+  newTask.addEventListener('click', () => {
+    taskType = 'new';
+    displayEditModal();
+  });
+});
+
 // SHOW EDIT TASK MODAL when any "Edit" button is clicked
-editTask.forEach(button => {
-  button.addEventListener('click', displayEditModal);
+editTask.forEach(function (editTask) {
+  editTask.addEventListener('click', () => {
+    taskType = 'edit';
+    displayEditModal();
+  });
 });
 
 // HIDE OVERLAY and pop-up MODALS
@@ -54,6 +77,7 @@ function addColumn() {
   <li>
     <div class="title-container">
       <span class="column-title completed">NEW COLUMN</span>
+      <button class="add_task">ADD TASK</button>
     </div>
   </li>`;
   boardColumnsEl.append(div);
@@ -110,7 +134,7 @@ title.addEventListener('keydown', e => {
 });
 
 // Add Column Event Listner
-addTaskBtn.addEventListener('click', addColumn);
+addColBtn.addEventListener('click', addColumn);
 
 // On Load
 loadTitle();
