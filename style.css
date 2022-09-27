@@ -159,6 +159,8 @@ body {
   padding: 1rem 0;
   border-radius: 10px;
   font-size: 1.5rem;
+  box-shadow: 0 2px 1px black;
+  cursor: pointer;
 }
 
 /* Chance this height for media queries */
@@ -176,7 +178,7 @@ body {
 
 .add_task {
   text-align: center;
-  padding: .1rem .5rem;
+  padding: 0.1rem 0.5rem;
   background-color: #3f4298;
   color: white;
   border-radius: 10px;
@@ -226,12 +228,23 @@ body {
 .edit-task-btn {
   align-self: flex-end;
   background: #00c2fd67;
-  padding: 0.3rem 1rem;
+  padding: .2rem 1rem;
   border-radius: 10px;
   font-weight: bold;
   font-family: 'Ubuntu', sans-serif;
   box-shadow: 0 2px 3px black;
   border: 0;
+}
+
+.edit_col_btn {
+  background: #00c2fd67;
+  padding: .09rem .7rem;
+  border-radius: 10px;
+  font-weight: bold;
+  font-family: 'Ubuntu', sans-serif;
+  box-shadow: 0 2px 3px black;
+  border: 0;
+  font-size: 1.2rem;
 }
 
 /* BUTTONS */
@@ -256,14 +269,16 @@ body {
 .column-btn:hover,
 .edit-task-btn:hover,
 .save-task:hover,
-.add_task:hover {
+.add_task:hover,
+.edit_col_btn:hover {
   transform: scale(1.03);
 }
 
 .column-btn:active,
 .edit-task-btn:active,
 .save-task:active,
-.add_task:active {
+.add_task:active,
+.edit_col_btn:active {
   transform: scale(0.9);
 }
 

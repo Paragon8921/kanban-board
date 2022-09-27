@@ -12,6 +12,7 @@ const saveTaskBtn = document.querySelector('.save-task');
 const deleteColumnBtn = document.querySelector('.delete_btn');
 const deleteColumnModal = document.querySelector('.delete-column');
 const boardColumnsEl = document.querySelector('.board-columns');
+const columnTitleSection = document.querySelectorAll('.toggle_color');
 const columnArray = [];
 
 let taskType = '';
@@ -76,7 +77,7 @@ function addColumn() {
   div.innerHTML = `
   <li>
     <div class="title-container">
-      <span class="column-title completed">NEW COLUMN</span>
+      <span class="column-title completed">NEW COLUMN <button class="edit_col_btn">EDIT</button></span>
       <button class="add_task">ADD TASK</button>
     </div>
   </li>`;
