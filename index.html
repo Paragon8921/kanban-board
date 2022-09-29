@@ -21,6 +21,7 @@
   </head>
   <body>
     <div class="overlay"></div>
+    <!-- Add / Edit Task -->
     <div class="edit-task-modal">
       <h1 class="task-title"></h1>
       <form class="task-form">
@@ -48,6 +49,32 @@
         </div>
         <div class="form-container">
           <button class="save-task">SAVE</butt>
+        </div>
+      </form>
+    </div>
+    <!-- Add / Edit Column -->
+    <div class="edit_column_modal">
+      <h1 class="task-title"></h1>
+      <form class="task-form">
+        <div class="form-container">
+          <label for="title" id="title-label">Title:</label>
+          <textarea
+            name="title"
+            class="form-style"
+            id="title-input"
+            cols="75"
+            rows="2"
+            maxlength="150"
+          ></textarea>
+        </div>
+      
+        <div class="form-container">
+          <label for="color">Column Color:</label>
+          <!-- <br /> -->
+          <input name="color" type="color">
+        </div>
+        <div class="form-container">
+          <button class="save_col">SAVE</butt>
         </div>
       </form>
     </div>
@@ -93,6 +120,15 @@
               <div class="column-contents custom-scroll">
                 <ul>
                   <!-- TASK CARD -->
+                  <li class="task">
+                    <div class="task-contents">
+                      <span class="task-title">Do This</span>
+                      <button class="edit-task-btn">EDIT</button>
+                    </div>
+                  </li>
+                  <!-- END TASK CARD -->
+
+                                    <!-- TASK CARD -->
                   <li class="task">
                     <div class="task-contents">
                       <span class="task-title">Do This</span>

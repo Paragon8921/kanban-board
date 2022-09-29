@@ -30,7 +30,8 @@ body {
 
 /* EDIT TASKS FORM */
 .delete-column,
-.edit-task-modal {
+.edit-task-modal,
+.edit_column_modal {
   display: none;
   flex-direction: column;
   align-items: center;
@@ -75,7 +76,8 @@ body {
   margin: 1rem;
 }
 
-.save-task {
+.save-task,
+.save_col {
   width: 100%;
   height: 3rem;
   font-family: 'Ubuntu', sans-serif;
@@ -228,7 +230,7 @@ body {
 .edit-task-btn {
   align-self: flex-end;
   background: #00c2fd67;
-  padding: .2rem 1rem;
+  padding: 0.2rem 1rem;
   border-radius: 10px;
   font-weight: bold;
   font-family: 'Ubuntu', sans-serif;
@@ -238,7 +240,7 @@ body {
 
 .edit_col_btn {
   background: #00c2fd67;
-  padding: .09rem .7rem;
+  padding: 0.09rem 0.7rem;
   border-radius: 10px;
   font-weight: bold;
   font-family: 'Ubuntu', sans-serif;
@@ -270,7 +272,8 @@ body {
 .edit-task-btn:hover,
 .save-task:hover,
 .add_task:hover,
-.edit_col_btn:hover {
+.edit_col_btn:hover,
+.save_col:hover {
   transform: scale(1.03);
 }
 
@@ -278,7 +281,8 @@ body {
 .edit-task-btn:active,
 .save-task:active,
 .add_task:active,
-.edit_col_btn:active {
+.edit_col_btn:active,
+.save_col:active {
   transform: scale(0.9);
 }
 

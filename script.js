@@ -13,15 +13,21 @@ const deleteColumnBtn = document.querySelector('.delete_btn');
 const deleteColumnModal = document.querySelector('.delete-column');
 const boardColumnsEl = document.querySelector('.board-columns');
 const columnTitleSection = document.querySelectorAll('.toggle_color');
+const editColModal = document.querySelector('.edit_column_modal');
+
 const columnArray = [];
+const editColBtn = document.querySelectorAll('.edit_col_btn');
 
 let taskType = '';
-
 let columnTitles = [];
 
 ////////////////////////////////////////////////////////////
 // Pop-Up Modals and Overlay
 ///////////////////////////////////////////////////////////
+
+//////////////////////////////////////
+//////////////  TASKS  //////////////
+/////////////////////////////////////
 
 // DISPLAY the Edit Task Modal and Overlay
 function displayEditModal() {
@@ -45,6 +51,7 @@ function hideModal() {
   overlay.style.display = 'none';
   editTaskModal.style.display = 'none';
   deleteColumnModal.style.display = 'none';
+  editColModal.style = 'none';
 }
 
 // SHOW NEW TASK MODAL when any "Add Task" button is clicked
@@ -68,6 +75,26 @@ overlay.addEventListener('click', hideModal);
 
 // SHOW DELETE COLUMN pop-up MODAL
 deleteColumnBtn.addEventListener('click', displayDeleteModal);
+
+/////////////////////////////////////////////////////////////////
+
+//////////////////////////////////////
+//////////////  COLUMNS  /////////////
+/////////////////////////////////////
+
+const colObserver = new MutationObserver(mutation => {
+  console.log(mutation);
+});
+
+function dispalyColModal() {
+  editColModal.style.display = 'flex';
+  overlay.style.display = 'block';
+}
+
+editColBtn.forEach(col => {
+  col.addEventListener('click', dispalyColModal);
+});
+
 /////////////////////////////////////////////////////////////////
 
 // Add Column
