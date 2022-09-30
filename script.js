@@ -1,9 +1,8 @@
 const title = document.querySelector('.board-title');
 const columnList = document.querySelectorAll('.column');
 const addColBtn = document.querySelector('.add_btn');
-const addTaskBtn = document.querySelectorAll('.add_task');
 const overlay = document.querySelector('.overlay');
-const editTask = document.querySelectorAll('.edit-task-btn');
+
 const editTaskModal = document.querySelector('.edit-task-modal');
 const taskTitle = document.getElementById('title-input');
 const editTaskTitle = document.querySelector('.task-title');
@@ -16,8 +15,9 @@ const columnTitleSection = document.querySelectorAll('.toggle_color');
 const editColModal = document.querySelector('.edit_column_modal');
 
 const columnArray = [];
-const editColBtn = document.querySelectorAll('.edit_col_btn');
-
+let editColBtn = document.querySelectorAll('.edit_col_btn');
+let addTaskBtn = document.querySelectorAll('.add_task');
+let editTask = document.querySelectorAll('.edit-task-btn');
 let taskType = '';
 let columnTitles = [];
 
@@ -54,22 +54,42 @@ function hideModal() {
   editColModal.style = 'none';
 }
 
-// SHOW NEW TASK MODAL when any "Add Task" button is clicked
-addTaskBtn.forEach(function (newTask) {
-  newTask.addEventListener('click', () => {
-    taskType = 'new';
-    displayEditModal();
-  });
+// Observer to check on DOM updates
+const colObserver = new MutationObserver(() => {
+  editColBtn = document.querySelectorAll('.edit_col_btn');
+  addTaskBtn = document.querySelectorAll('.add_task');
+  editTask = document.querySelectorAll('.edit-task-btn');
+  getAllColEditBtn();
+  getAllNewTaskBtns();
+  getAllEditBtns();
 });
+
+// SHOW NEW TASK MODAL when any "Add Task" button is clicked
+function getAllNewTaskBtns() {
+  addTaskBtn.forEach(function (newTask) {
+    newTask.addEventListener('click', () => {
+      taskType = 'new';
+      displayEditModal();
+    });
+  });
+}
+
+colObserver.observe(boardColumnsEl, { childList: true });
+//////////////////////////////////////////////////////////////////
 
 // SHOW EDIT TASK MODAL when any "Edit" button is clicked
-editTask.forEach(function (editTask) {
-  editTask.addEventListener('click', () => {
-    taskType = 'edit';
-    displayEditModal();
+function getAllEditBtns() {
+  editTask.forEach(function (editTask) {
+    editTask.addEventListener('click', () => {
+      taskType = 'edit';
+      displayEditModal();
+    });
   });
-});
+}
 
+colObserver.observe(boardColumnsEl, { childList: true });
+
+/////////////////////////////////////////////////////////////////
 // HIDE OVERLAY and pop-up MODALS
 overlay.addEventListener('click', hideModal);
 
@@ -82,18 +102,18 @@ deleteColumnBtn.addEventListener('click', displayDeleteModal);
 //////////////  COLUMNS  /////////////
 /////////////////////////////////////
 
-const colObserver = new MutationObserver(mutation => {
-  console.log(mutation);
-});
+function getAllColEditBtn() {
+  editColBtn.forEach(col => {
+    col.addEventListener('click', dispalyColModal);
+  });
+}
+
+colObserver.observe(boardColumnsEl, { childList: true });
 
 function dispalyColModal() {
   editColModal.style.display = 'flex';
   overlay.style.display = 'block';
 }
-
-editColBtn.forEach(col => {
-  col.addEventListener('click', dispalyColModal);
-});
 
 /////////////////////////////////////////////////////////////////
 
@@ -166,3 +186,6 @@ addColBtn.addEventListener('click', addColumn);
 
 // On Load
 loadTitle();
+getAllColEditBtn();
+getAllNewTaskBtns();
+getAllEditBtns();
