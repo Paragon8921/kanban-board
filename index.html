@@ -54,24 +54,23 @@
     </div>
     <!-- Add / Edit Column -->
     <div class="edit_column_modal">
-      <h1 class="task-title"></h1>
+      <h1 class="edit_col_title"></h1>
       <form class="task-form">
         <div class="form-container">
           <label for="title" id="title-label">Title:</label>
           <textarea
             name="title"
             class="form-style"
-            id="title-input"
+            id="col_title"
             cols="75"
             rows="2"
             maxlength="150"
           ></textarea>
         </div>
-      
         <div class="form-container">
           <label for="color">Column Color:</label>
           <!-- <br /> -->
-          <input name="color" type="color">
+          <input id="col_color" name="color" type="color">
         </div>
         <div class="form-container">
           <button class="save_col">SAVE</butt>
