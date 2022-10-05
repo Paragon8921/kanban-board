@@ -211,6 +211,10 @@ body {
   background: rgba(145, 52, 207, 0.2);
 }
 
+.default {
+  background: rgba(145, 52, 207, 0.2);
+}
+
 /* TASK CARDS */
 
 .task {

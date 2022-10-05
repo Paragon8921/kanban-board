@@ -16,18 +16,14 @@ const columnTitleSection = document.querySelectorAll('.toggle_color');
 const editColModal = document.querySelector('.edit_column_modal');
 const editColTitle = document.querySelector('.edit_col_title');
 const saveColBtn = document.querySelector('.save_col');
-const columnArray = [];
-const taskArray = [];
 
+let columnArray = [];
+let taskArray = [];
 let editColBtn = document.querySelectorAll('.edit_col_btn');
 let addTaskBtn = document.querySelectorAll('.add_task');
 let editTask = document.querySelectorAll('.edit-task-btn');
+let addedCol = document.querySelectorAll('.default');
 let taskType = '';
-
-let columnDetails = {
-  columnTitle: '',
-  columnColor: '',
-};
 
 ////////////////////////////////////////////////////////////
 // Pop-Up Modals and Overlay
@@ -136,25 +132,29 @@ function dispalyColModal() {
 /////////////////////////////////////////////////////////////////
 
 // Add Column
-function addColumn(e) {
+function addColumn(title, color) {
   const div = document.createElement('div');
   div.className = 'column';
   div.innerHTML = `
   <li>
     <div class="title-container">
-      <span class="column-title completed">${colTitle.value.toUpperCase()} <button class="edit_col_btn">EDIT</button></span>
+      <span class="column-title default" style="background-color:${color}">${title.toUpperCase()} <button class="edit_col_btn">EDIT</button></span>
       <button class="add_task">ADD TASK</button>
     </div>
   </li>`;
   boardColumnsEl.append(div);
-  columnArray.push([{ title: colTitle.value, color: colColor.value }]);
+}
 
+function storeColumn(e) {
+  addColumn(colTitle.value, colColor.value);
+  columnArray.push([{ title: colTitle.value, color: colColor.value }]);
   e.preventDefault();
   localStorage.setItem('columns', JSON.stringify(columnArray));
-  console.log(JSON.parse(localStorage.getItem('columns')));
+  // console.log(JSON.parse(localStorage.getItem('columns')));
   hideModal();
 }
-saveColBtn.addEventListener('click', addColumn);
+
+saveColBtn.addEventListener('click', storeColumn);
 
 // GET FORM DATA ON SAVE BUTTON
 // saveTaskBtn.addEventListener('click', e => {
@@ -168,9 +168,25 @@ function setTitle() {
   localStorage.setItem('boardTitle', title.textContent);
 }
 
-function loadTitle() {
+//Load Local Storage
+function loadSavedState() {
+  //Board Title
   if (localStorage.getItem('boardTitle')) {
     title.textContent = localStorage.getItem('boardTitle');
+  }
+
+  //Columns
+  if (localStorage.getItem('columns')) {
+    columnArray = JSON.parse(localStorage.getItem('columns'));
+    let colColor = [];
+    columnArray.forEach(col => {
+      addColumn(col[0].title);
+      colColor.push(col[0].color);
+    });
+    addedCol = document.querySelectorAll('.default');
+    addedCol.forEach((element, index) => {
+      element.style.backgroundColor = colColor[index];
+    });
   }
 }
 
@@ -215,7 +231,7 @@ addColBtn.addEventListener('click', () => {
 });
 
 // On Load
-loadTitle();
+loadSavedState();
 getAllColEditBtn();
 getAllNewTaskBtns();
 getAllEditBtns();
