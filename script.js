@@ -138,7 +138,7 @@ function addColumn(title, color) {
   div.innerHTML = `
   <li>
     <div class="title-container">
-      <span class="column-title default" style="background-color:${color}">${title.toUpperCase()} <button class="edit_col_btn">EDIT</button></span>
+      <span class="column-title default" style="background:${color}">${title.toUpperCase()} <button class="edit_col_btn">EDIT</button></span>
       <button class="add_task">ADD TASK</button>
     </div>
   </li>`;
@@ -185,7 +185,7 @@ function loadSavedState() {
     });
     addedCol = document.querySelectorAll('.default');
     addedCol.forEach((element, index) => {
-      element.style.backgroundColor = colColor[index];
+      element.style.background = colColor[index];
     });
   }
 }
