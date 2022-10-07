@@ -145,6 +145,19 @@ function addColumn(title, color) {
   boardColumnsEl.append(div);
 }
 
+// Add Task
+function addTask(){
+  const li = document.createElement('li');
+  li.className = 'task';
+  li.innerHTML = `                  
+  <li class="task">
+    <div class="task-contents">
+      <span class="task-title">${taskTitle.value}</span>
+      <button class="edit-task-btn">EDIT</button>
+    </div>
+  </li>`
+}
+
 function storeColumn(e) {
   addColumn(colTitle.value, colColor.value);
   columnArray.push([{ title: colTitle.value, color: colColor.value }]);
