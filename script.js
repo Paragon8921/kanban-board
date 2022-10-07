@@ -170,6 +170,7 @@ function setTitle() {
 
 //Load Local Storage
 function loadSavedState() {
+
   //Board Title
   if (localStorage.getItem('boardTitle')) {
     title.textContent = localStorage.getItem('boardTitle');
