@@ -19,10 +19,12 @@ const saveColBtn = document.querySelector('.save_col');
 
 let columnArray = [];
 let taskArray = [];
+let currentTask = '';
 let editColBtn = document.querySelectorAll('.edit_col_btn');
 let addTaskBtn = document.querySelectorAll('.add_task');
 let editTask = document.querySelectorAll('.edit-task-btn');
 let addedCol = document.querySelectorAll('.default');
+let taskList = document.querySelectorAll('.task_list');
 let taskType = '';
 
 ////////////////////////////////////////////////////////////
@@ -63,6 +65,7 @@ const colObserver = new MutationObserver(() => {
   editColBtn = document.querySelectorAll('.edit_col_btn');
   addTaskBtn = document.querySelectorAll('.add_task');
   editTask = document.querySelectorAll('.edit-task-btn');
+  taskList = document.querySelectorAll('.task_list');
   getAllColEditBtn();
   getAllNewTaskBtns();
   getAllEditBtns();
@@ -70,10 +73,11 @@ const colObserver = new MutationObserver(() => {
 
 // SHOW NEW TASK MODAL when any "Add Task" button is clicked
 function getAllNewTaskBtns() {
-  addTaskBtn.forEach(function (newTask) {
+  addTaskBtn.forEach(function (newTask, i) {
     newTask.addEventListener('click', () => {
       taskType = 'new';
       displayEditModal();
+      currentTask = i;
     });
   });
 }
@@ -141,21 +145,25 @@ function addColumn(title, color) {
       <span class="column-title default" style="background:${color}">${title.toUpperCase()} <button class="edit_col_btn">EDIT</button></span>
       <button class="add_task">ADD TASK</button>
     </div>
+  </li>
+  <li>
+    <div class="column-contents custom-scroll">
+      <ul class="task_list"></ul>
+    </div>
   </li>`;
   boardColumnsEl.append(div);
 }
 
 // Add Task
-function addTask(){
+function addTask(col) {
   const li = document.createElement('li');
   li.className = 'task';
   li.innerHTML = `                  
-  <li class="task">
     <div class="task-contents">
       <span class="task-title">${taskTitle.value}</span>
       <button class="edit-task-btn">EDIT</button>
-    </div>
-  </li>`
+    </div>`;
+  taskList[col].append(li);
 }
 
 function storeColumn(e) {
@@ -177,13 +185,18 @@ saveColBtn.addEventListener('click', storeColumn);
 //   );
 // });
 
+saveTaskBtn.addEventListener('click', e => {
+  e.preventDefault();
+  addTask(currentTask);
+  console.log(currentTask);
+});
+
 function setTitle() {
   localStorage.setItem('boardTitle', title.textContent);
 }
 
 //Load Local Storage
 function loadSavedState() {
-
   //Board Title
   if (localStorage.getItem('boardTitle')) {
     title.textContent = localStorage.getItem('boardTitle');
@@ -201,6 +214,7 @@ function loadSavedState() {
     addedCol.forEach((element, index) => {
       element.style.background = colColor[index];
     });
+    taskList = document.querySelectorAll('.task_list');
   }
 }
 
@@ -240,7 +254,7 @@ title.addEventListener('keydown', e => {
 addColBtn.addEventListener('click', () => {
   taskType = 'new';
   colTitle.value = '';
-  colColor.value = '#000000';
+  colColor.value = '#FFFFFF';
   dispalyColModal();
 });
 
