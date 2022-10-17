@@ -3,11 +3,9 @@ const columnList = document.querySelectorAll('.column');
 const addColBtn = document.querySelector('.add_btn');
 const overlay = document.querySelector('.overlay');
 const editTaskModal = document.querySelector('.edit-task-modal');
-const taskTitle = document.getElementById('title-input');
 const colTitle = document.getElementById('col_title');
 const colColor = document.getElementById('col_color');
 const editTaskTitle = document.querySelector('.task-title');
-const taskDescription = document.getElementById('description');
 const saveTaskBtn = document.querySelector('.save-task');
 const deleteColumnBtn = document.querySelector('.delete_btn');
 const deleteColumnModal = document.querySelector('.delete-column');
@@ -16,6 +14,7 @@ const columnTitleSection = document.querySelectorAll('.toggle_color');
 const editColModal = document.querySelector('.edit_column_modal');
 const editColTitle = document.querySelector('.edit_col_title');
 const saveColBtn = document.querySelector('.save_col');
+const columnContents = document.querySelector('.column-contents');
 
 let columnArray = [];
 let taskArray = [];
@@ -26,6 +25,8 @@ let editTask = document.querySelectorAll('.edit-task-btn');
 let addedCol = document.querySelectorAll('.default');
 let taskList = document.querySelectorAll('.task_list');
 let taskType = '';
+let taskTitle = document.getElementById('title-input');
+let taskDescription = document.getElementById('description');
 
 ////////////////////////////////////////////////////////////
 // Pop-Up Modals and Overlay
@@ -60,7 +61,26 @@ function hideModal() {
   editColModal.style = 'none';
 }
 
-// Observer to check on DOM updates
+// SHOW NEW TASK MODAL when any "Add Task" button is clicked
+function getAllNewTaskBtns() {
+  addTaskBtn.forEach(function (newTask, i) {
+    newTask.addEventListener('click', () => {
+      taskTitle.value = '';
+      taskDescription.value = '';
+      taskType = 'new';
+      displayEditModal();
+      currentTask = i;
+    });
+  });
+}
+
+//////////////////////////////////////////////////////////////////
+
+//////////////////////////////////////////////////////////////////
+////////////////////// DOM OBSERVERS /////////////////////////////
+//////////////////////////////////////////////////////////////////
+
+// Observer to check on DOM updates for COLUMNS
 const colObserver = new MutationObserver(() => {
   editColBtn = document.querySelectorAll('.edit_col_btn');
   addTaskBtn = document.querySelectorAll('.add_task');
@@ -71,19 +91,9 @@ const colObserver = new MutationObserver(() => {
   getAllEditBtns();
 });
 
-// SHOW NEW TASK MODAL when any "Add Task" button is clicked
-function getAllNewTaskBtns() {
-  addTaskBtn.forEach(function (newTask, i) {
-    newTask.addEventListener('click', () => {
-      taskType = 'new';
-      displayEditModal();
-      currentTask = i;
-    });
-  });
-}
+colObserver.observe(boardColumnsEl, { childList: true, subtree: true });
 
-colObserver.observe(boardColumnsEl, { childList: true });
-//////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////
 
 // SHOW EDIT TASK MODAL when any "Edit" button is clicked
 function getAllEditBtns() {
@@ -94,8 +104,6 @@ function getAllEditBtns() {
     });
   });
 }
-
-colObserver.observe(boardColumnsEl, { childList: true });
 
 /////////////////////////////////////////////////////////////////
 // HIDE OVERLAY and pop-up MODALS
@@ -120,8 +128,6 @@ function getAllColEditBtn() {
     });
   });
 }
-
-colObserver.observe(boardColumnsEl, { childList: true });
 
 function dispalyColModal() {
   editColModal.style.display = 'flex';
@@ -171,24 +177,15 @@ function storeColumn(e) {
   columnArray.push([{ title: colTitle.value, color: colColor.value }]);
   e.preventDefault();
   localStorage.setItem('columns', JSON.stringify(columnArray));
-  // console.log(JSON.parse(localStorage.getItem('columns')));
   hideModal();
 }
 
 saveColBtn.addEventListener('click', storeColumn);
 
-// GET FORM DATA ON SAVE BUTTON
-// saveTaskBtn.addEventListener('click', e => {
-//   e.preventDefault();
-//   console.log(
-//     `Title: ${taskTitle.value} - Description: ${taskDescription.value}`
-//   );
-// });
-
 saveTaskBtn.addEventListener('click', e => {
   e.preventDefault();
   addTask(currentTask);
-  console.log(currentTask);
+  hideModal();
 });
 
 function setTitle() {
@@ -202,7 +199,7 @@ function loadSavedState() {
     title.textContent = localStorage.getItem('boardTitle');
   }
 
-  //Columns
+  //COLUMNS
   if (localStorage.getItem('columns')) {
     columnArray = JSON.parse(localStorage.getItem('columns'));
     let colColor = [];
@@ -214,6 +211,8 @@ function loadSavedState() {
     addedCol.forEach((element, index) => {
       element.style.background = colColor[index];
     });
+
+    // TASKS
     taskList = document.querySelectorAll('.task_list');
   }
 }
