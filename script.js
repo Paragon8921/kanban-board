@@ -160,18 +160,6 @@ function addColumn(title, color) {
   boardColumnsEl.append(div);
 }
 
-// Add Task
-function addTask(col) {
-  const li = document.createElement('li');
-  li.className = 'task';
-  li.innerHTML = `                  
-    <div class="task-contents">
-      <span class="task-title">${taskTitle.value}</span>
-      <button class="edit-task-btn">EDIT</button>
-    </div>`;
-  taskList[col].append(li);
-}
-
 function storeColumn(e) {
   addColumn(colTitle.value, colColor.value);
   columnArray.push([{ title: colTitle.value, color: colColor.value }]);
@@ -182,11 +170,32 @@ function storeColumn(e) {
 
 saveColBtn.addEventListener('click', storeColumn);
 
-saveTaskBtn.addEventListener('click', e => {
+// Add Task
+function addTask(col, title) {
+  const li = document.createElement('li');
+  li.className = 'task';
+  li.innerHTML = `                  
+    <div class="task-contents">
+      <span class="task-title">${title}</span>
+      <button class="edit-task-btn">EDIT</button>
+    </div>`;
+  taskList[col].append(li);
+}
+
+function storeTask(e) {
   e.preventDefault();
-  addTask(currentTask);
+  addTask(currentTask, taskTitle.value);
+  taskArray.push({
+    column: currentTask,
+    title: taskTitle.value,
+    description: taskDescription.value,
+  });
+  console.log(JSON.stringify(taskArray));
+  localStorage.setItem('tasks', JSON.stringify(taskArray));
   hideModal();
-});
+}
+
+saveTaskBtn.addEventListener('click', storeTask);
 
 function setTitle() {
   localStorage.setItem('boardTitle', title.textContent);
@@ -202,18 +211,19 @@ function loadSavedState() {
   //COLUMNS
   if (localStorage.getItem('columns')) {
     columnArray = JSON.parse(localStorage.getItem('columns'));
-    let colColor = [];
     columnArray.forEach(col => {
-      addColumn(col[0].title);
-      colColor.push(col[0].color);
-    });
-    addedCol = document.querySelectorAll('.default');
-    addedCol.forEach((element, index) => {
-      element.style.background = colColor[index];
+      addColumn(col[0].title, col[0].color);
     });
 
     // TASKS
     taskList = document.querySelectorAll('.task_list');
+    if (localStorage.getItem('tasks')) {
+      taskArray = JSON.parse(localStorage.getItem('tasks'));
+      taskArray.forEach(taskItem => {
+        addTask(taskItem.column, taskItem.title);
+        console.log(taskItem.column);
+      });
+    }
   }
 }
 
