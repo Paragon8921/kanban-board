@@ -190,7 +190,6 @@ function storeTask(e) {
     title: taskTitle.value,
     description: taskDescription.value,
   });
-  console.log(JSON.stringify(taskArray));
   localStorage.setItem('tasks', JSON.stringify(taskArray));
   hideModal();
 }
@@ -221,7 +220,6 @@ function loadSavedState() {
       taskArray = JSON.parse(localStorage.getItem('tasks'));
       taskArray.forEach(taskItem => {
         addTask(taskItem.column, taskItem.title);
-        console.log(taskItem.column);
       });
     }
   }
