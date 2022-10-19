@@ -97,7 +97,6 @@ colObserver.observe(boardColumnsEl, { childList: true, subtree: true });
 
 // GET TITLE and DESCRIPTION for Task
 function getTaskDetails(editTask) {
-  console.log('test');
   let details = taskArray.find(
     task => task.title === editTask.parentElement.childNodes[1].innerHTML
   );
