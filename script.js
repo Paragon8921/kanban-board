@@ -95,11 +95,24 @@ colObserver.observe(boardColumnsEl, { childList: true, subtree: true });
 
 ///////////////////////////////////////////////////////////////////
 
+// GET TITLE and DESCRIPTION for Task
+function getTaskDetails(editTask) {
+  console.log('test');
+  let details = taskArray.find(
+    task => task.title === editTask.parentElement.childNodes[1].innerHTML
+  );
+
+  return details;
+}
+
 // SHOW EDIT TASK MODAL when any "Edit" button is clicked
 function getAllEditBtns() {
   editTask.forEach(function (editTask) {
     editTask.addEventListener('click', () => {
       taskType = 'edit';
+      taskTitle.value = getTaskDetails(editTask).title;
+      taskDescription.value = getTaskDetails(editTask).description;
+
       displayEditModal();
     });
   });
