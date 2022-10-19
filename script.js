@@ -131,10 +131,11 @@ deleteColumnBtn.addEventListener('click', displayDeleteModal);
 /////////////////////////////////////
 
 function getAllColEditBtn() {
-  editColBtn.forEach(col => {
+  editColBtn.forEach((col, index) => {
     col.addEventListener('click', () => {
-      colTitle.value = '';
-      colColor.value = '#000000';
+      console.log(columnArray[index][0].title);
+      colTitle.value = columnArray[index][0].title;
+      colColor.value = columnArray[index][0].color;
       taskType = 'edit';
       dispalyColModal();
     });
