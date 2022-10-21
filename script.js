@@ -7,6 +7,7 @@ const colTitle = document.getElementById('col_title');
 const colColor = document.getElementById('col_color');
 const editTaskTitle = document.querySelector('.task-title');
 const saveTaskBtn = document.querySelector('.save-task');
+const deleteTaskBtn = document.querySelector('.delete_task');
 const deleteColumnBtn = document.querySelector('.delete_btn');
 const deleteColumnModal = document.querySelector('.delete-column');
 const boardColumnsEl = document.querySelector('.board-columns');
@@ -220,13 +221,20 @@ function storeTask(e) {
   } else {
     taskArray[currentTask].title = taskTitle.value;
     taskArray[currentTask].description = taskDescription.value;
-    // localStorage.setItem('tasks', JSON.stringify(taskArray));
     setTaskLocalStorage('tasks');
   }
   hideModal();
 }
 
 saveTaskBtn.addEventListener('click', storeTask);
+
+function deleteTask(e) {
+  // e.preventDefault();
+  taskArray.splice(currentTask, 1);
+  setTaskLocalStorage('tasks');
+}
+
+deleteTaskBtn.addEventListener('click', deleteTask);
 
 function setTitle() {
   localStorage.setItem('boardTitle', title.textContent);

@@ -73,19 +73,29 @@ body {
 }
 
 .form-container {
-  margin: 1rem;
+  margin: .3rem;
 }
 
 .save-task,
-.save_col {
+.save_col{
+  background: rgba(44, 133, 50, 0.605);
+}
+
+.delete_task{
+  background: #9f4545;
+}
+
+.save-task,
+.save_col,
+.delete_task {
   width: 100%;
   height: 3rem;
   font-family: 'Ubuntu', sans-serif;
   font-size: 1.5rem;
   font-weight: bold;
-  background: rgba(44, 133, 50, 0.605);
   border: none;
   border-radius: 10px;
+  margin-bottom: .5rem;
 }
 
 .delete-column {
@@ -195,22 +205,6 @@ body {
 
 /* PLACEHOLDER COLUMN COLORS */
 
-.backlog {
-  background: rgba(207, 52, 52, 0.2);
-}
-
-.in-progress {
-  background: rgba(52, 62, 207, 0.2);
-}
-
-.on-hold {
-  background: rgba(52, 163, 207, 0.2);
-}
-
-.completed {
-  background: rgba(145, 52, 207, 0.2);
-}
-
 .default {
   background: rgba(145, 52, 207, 0.2);
 }
@@ -277,8 +271,10 @@ body {
 .save-task:hover,
 .add_task:hover,
 .edit_col_btn:hover,
-.save_col:hover {
+.save_col:hover,
+.delete_task:hover {
   transform: scale(1.03);
+  cursor: pointer;
 }
 
 .column-btn:active,
@@ -286,7 +282,8 @@ body {
 .save-task:active,
 .add_task:active,
 .edit_col_btn:active,
-.save_col:active {
+.save_col:active,
+.delete_task:active {
   transform: scale(0.9);
 }
 
