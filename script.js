@@ -18,6 +18,7 @@ const columnContents = document.querySelector('.column-contents');
 
 let columnArray = [];
 let taskArray = [];
+let currentCol = '';
 let currentTask = '';
 let editColBtn = document.querySelectorAll('.edit_col_btn');
 let addTaskBtn = document.querySelectorAll('.add_task');
@@ -69,9 +70,19 @@ function getAllNewTaskBtns() {
       taskDescription.value = '';
       taskType = 'new';
       displayEditModal();
-      currentTask = i;
+      currentCol = i;
     });
   });
+}
+
+//////////////////////////////////////////////////////////////////
+
+//////////////////////////////////////////////////////////////////
+////////////////////// LOCAL STORAGE FUNCTIONS ///////////////////
+//////////////////////////////////////////////////////////////////
+
+function setTaskLocalStorage(key) {
+  localStorage.setItem(`${key}`, JSON.stringify(taskArray));
 }
 
 //////////////////////////////////////////////////////////////////
@@ -111,7 +122,7 @@ function getAllEditBtns() {
       taskType = 'edit';
       taskTitle.value = getTaskDetails(editTask).title;
       taskDescription.value = getTaskDetails(editTask).description;
-
+      currentTask = taskArray.findIndex(task => task.title === taskTitle.value);
       displayEditModal();
     });
   });
@@ -133,7 +144,6 @@ deleteColumnBtn.addEventListener('click', displayDeleteModal);
 function getAllColEditBtn() {
   editColBtn.forEach((col, index) => {
     col.addEventListener('click', () => {
-      console.log(columnArray[index][0].title);
       colTitle.value = columnArray[index][0].title;
       colColor.value = columnArray[index][0].color;
       taskType = 'edit';
@@ -190,20 +200,29 @@ function addTask(col, title) {
   li.innerHTML = `                  
     <div class="task-contents">
       <span class="task-title">${title}</span>
-      <button class="edit-task-btn">EDIT</button>
+      <button class="edit-task-btn">VIEW / EDIT</button>
     </div>`;
   taskList[col].append(li);
 }
 
 function storeTask(e) {
+  // enable to test in console
   e.preventDefault();
-  addTask(currentTask, taskTitle.value);
-  taskArray.push({
-    column: currentTask,
-    title: taskTitle.value,
-    description: taskDescription.value,
-  });
-  localStorage.setItem('tasks', JSON.stringify(taskArray));
+
+  if (taskType === 'new') {
+    addTask(currentCol, taskTitle.value);
+    taskArray.push({
+      column: currentCol,
+      title: taskTitle.value,
+      description: taskDescription.value,
+    });
+    setTaskLocalStorage('tasks');
+  } else {
+    taskArray[currentTask].title = taskTitle.value;
+    taskArray[currentTask].description = taskDescription.value;
+    // localStorage.setItem('tasks', JSON.stringify(taskArray));
+    setTaskLocalStorage('tasks');
+  }
   hideModal();
 }
 
