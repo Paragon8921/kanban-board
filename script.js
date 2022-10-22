@@ -57,6 +57,26 @@ function displayDeleteModal() {
   overlay.style.display = 'block';
 }
 
+function populateDeleteModal(title, color) {
+  const delDiv = document.createElement('div');
+  delDiv.className = 'column-item column-title';
+  delDiv.style.background = `${color}`;
+  delDiv.innerHTML = `
+      <span>${title}</span>
+      <i class="fa-solid fa-xmark"></i>
+  `;
+  deleteColumnModal.append(delDiv);
+}
+
+// SHOW DELETE COLUMN pop-up MODAL
+deleteColumnBtn.addEventListener('click', () => {
+  displayDeleteModal();
+  deleteColumnModal.innerHTML = '';
+  columnArray.forEach(col => {
+    populateDeleteModal(col[0].title, col[0].color);
+  });
+});
+
 // HIDE the Modals and Overlay
 function hideModal() {
   overlay.style.display = 'none';
@@ -134,9 +154,6 @@ function getAllEditBtns() {
 /////////////////////////////////////////////////////////////////
 // HIDE OVERLAY and pop-up MODALS
 overlay.addEventListener('click', hideModal);
-
-// SHOW DELETE COLUMN pop-up MODAL
-deleteColumnBtn.addEventListener('click', displayDeleteModal);
 
 /////////////////////////////////////////////////////////////////
 
