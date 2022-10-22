@@ -43,8 +43,10 @@ function displayEditModal() {
   overlay.style.display = 'block';
   editTaskModal.style.display = 'flex';
   if (taskType === 'edit') {
+    deleteTaskBtn.style.display = 'block';
     editTaskTitle.textContent = 'EDIT TASK';
   } else {
+    deleteTaskBtn.style.display = 'none';
     editTaskTitle.textContent = 'NEW TASK';
   }
 }
