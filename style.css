@@ -28,9 +28,10 @@ body {
   cursor: pointer;
 }
 
-/* EDIT TAKS FORM */
+/* EDIT TASKS FORM */
 .delete-column,
-.edit-task-modal {
+.edit-task-modal,
+.edit_column_modal {
   display: none;
   flex-direction: column;
   align-items: center;
@@ -49,17 +50,17 @@ body {
   z-index: 2;
 }
 
-.fa-xmark{
+.fa-xmark {
   float: right;
   padding-right: 2rem;
 }
 
-.fa-xmark:hover{
-  transform:scale(1.2)
+.fa-xmark:hover {
+  transform: scale(1.2);
 }
 
-.fa-xmark:active{
-  transform:scale(.8)
+.fa-xmark:active {
+  transform: scale(0.8);
 }
 
 .form-style {
@@ -72,18 +73,29 @@ body {
 }
 
 .form-container {
-  margin: 1rem;
+  margin: .3rem;
 }
 
-.save-task {
+.save-task,
+.save_col{
+  background: rgba(44, 133, 50, 0.605);
+}
+
+.delete_task{
+  background: #9f4545;
+}
+
+.save-task,
+.save_col,
+.delete_task {
   width: 100%;
   height: 3rem;
   font-family: 'Ubuntu', sans-serif;
   font-size: 1.5rem;
   font-weight: bold;
-  background: rgba(44, 133, 50, 0.605);
   border: none;
   border-radius: 10px;
+  margin-bottom: .5rem;
 }
 
 .delete-column {
@@ -96,7 +108,7 @@ body {
 }
 
 .custom-scroll::-webkit-scrollbar-track {
-  background: #f1f1f1;
+  background: #bdbcbc;
   border-radius: 10px;
 }
 
@@ -112,8 +124,7 @@ body {
 .page-container {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  height: 100vh;
+  justify-content: flex-start;
 }
 
 /* BOARD */
@@ -121,6 +132,13 @@ body {
 .board-title {
   text-align: center;
   padding: 1rem;
+  font-size: 3em;
+  font-family: 'Ubuntu', sans-serif;
+  font-weight: bold;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  border: none;
 }
 
 .board-columns {
@@ -128,12 +146,15 @@ body {
   justify-content: center;
   gap: 1rem;
   padding: 1em;
-  height: 100%;
+  width: 100%;
+  height: 85vh;
 }
 
 .board-container {
   flex: 1;
-  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 /* COLUMNS */
@@ -150,12 +171,15 @@ body {
   padding: 1rem 0;
   border-radius: 10px;
   font-size: 1.5rem;
+  box-shadow: 0 2px 1px black;
+  cursor: pointer;
 }
 
 /* Chance this height for media queries */
 .column-contents {
+  /* height: 100%; */
   overflow-y: auto;
-  height: 690px;
+  height: 70vh;
 }
 
 .title-container {
@@ -164,19 +188,24 @@ body {
   padding: 0.8rem;
 }
 
-.backlog {
-  background: rgba(207, 52, 52, 0.2);
+.add_task {
+  text-align: center;
+  padding: 0.1rem 0.5rem;
+  background-color: #3f4298;
+  color: white;
+  border-radius: 10px;
+  font-size: 1.2rem;
+  font-family: 'Ubuntu', sans-serif;
+  border: none;
+  width: 8rem;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 0 2px 1px black;
 }
 
-.in-progress {
-  background: rgba(52, 62, 207, 0.2);
-}
+/* PLACEHOLDER COLUMN COLORS */
 
-.on-hold {
-  background: rgba(52, 163, 207, 0.2);
-}
-
-.completed {
+.default {
   background: rgba(145, 52, 207, 0.2);
 }
 
@@ -199,12 +228,23 @@ body {
 .edit-task-btn {
   align-self: flex-end;
   background: #00c2fd67;
-  padding: 0.3rem 1rem;
+  padding: 0.2rem 1rem;
   border-radius: 10px;
   font-weight: bold;
   font-family: 'Ubuntu', sans-serif;
   box-shadow: 0 2px 3px black;
   border: 0;
+}
+
+.edit_col_btn {
+  background: #3288a2;
+  padding: 0.09rem 0.7rem;
+  border-radius: 10px;
+  font-weight: bold;
+  font-family: 'Ubuntu', sans-serif;
+  box-shadow: 0 2px 3px black;
+  border: 0;
+  font-size: 1.2rem;
 }
 
 /* BUTTONS */
@@ -228,20 +268,29 @@ body {
 
 .column-btn:hover,
 .edit-task-btn:hover,
-.save-task:hover {
+.save-task:hover,
+.add_task:hover,
+.edit_col_btn:hover,
+.save_col:hover,
+.delete_task:hover {
   transform: scale(1.03);
+  cursor: pointer;
 }
 
 .column-btn:active,
 .edit-task-btn:active,
-.save-task:active {
+.save-task:active,
+.add_task:active,
+.edit_col_btn:active,
+.save_col:active,
+.delete_task:active {
   transform: scale(0.9);
 }
 
-.add-btn {
+.add_btn {
   background: #458a9f;
 }
 
-.delete-btn {
+.delete_btn {
   background: #9f4545;
 }
