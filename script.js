@@ -1,5 +1,4 @@
 const title = document.querySelector('.board-title');
-const columnList = document.querySelectorAll('.column');
 const addColBtn = document.querySelector('.add_btn');
 const overlay = document.querySelector('.overlay');
 const editTaskModal = document.querySelector('.edit-task-modal');
@@ -26,9 +25,35 @@ let addTaskBtn = document.querySelectorAll('.add_task');
 let editTask = document.querySelectorAll('.edit-task-btn');
 let addedCol = document.querySelectorAll('.default');
 let taskList = document.querySelectorAll('.task_list');
+let columnList = document.querySelectorAll('.column');
 let taskType = '';
 let taskTitle = document.getElementById('title-input');
 let taskDescription = document.getElementById('description');
+let deleteColXmark = document.querySelectorAll('.del_col_xmark');
+
+//////////////////////////////////////////////////////////////////
+////////////////////// DOM OBSERVERS /////////////////////////////
+//////////////////////////////////////////////////////////////////
+
+// Observer to check on DOM updates for COLUMNS
+const colObserver = new MutationObserver(() => {
+  editColBtn = document.querySelectorAll('.edit_col_btn');
+  addTaskBtn = document.querySelectorAll('.add_task');
+  editTask = document.querySelectorAll('.edit-task-btn');
+  taskList = document.querySelectorAll('.task_list');
+  columnList = document.querySelectorAll('.column');
+  deleteColXmark = document.querySelectorAll('.del_col_xmark');
+  getAllColEditBtn();
+  getAllNewTaskBtns();
+  getAllEditBtns();
+  getAllDeleteColBtns();
+});
+
+colObserver.observe(boardColumnsEl, { childList: true, subtree: true });
+
+colObserver.observe(deleteColumnModal, { childList: true, subtree: true });
+
+///////////////////////////////////////////////////////////////////
 
 ////////////////////////////////////////////////////////////
 // Pop-Up Modals and Overlay
@@ -63,7 +88,7 @@ function populateDeleteModal(title, color) {
   delDiv.style.background = `${color}`;
   delDiv.innerHTML = `
       <span>${title}</span>
-      <i class="fa-solid fa-xmark"></i>
+      <i class="fa-solid fa-xmark del_col_xmark"></i>
   `;
   deleteColumnModal.append(delDiv);
 }
@@ -98,6 +123,21 @@ function getAllNewTaskBtns() {
   });
 }
 
+function getAllDeleteColBtns() {
+  deleteColXmark.forEach(function (deleteColBtn, i) {
+    deleteColBtn.addEventListener('click', () => {
+      const colEmpty = taskArray.find(element => element.column === i);
+      if (colEmpty) {
+        alert('Unable to delete Columns with tasks.');
+      } else {
+        columnArray.splice(i, 1);
+        localStorage.setItem('columns', JSON.stringify(columnArray));
+        location.reload();
+      }
+    });
+  });
+}
+
 //////////////////////////////////////////////////////////////////
 
 //////////////////////////////////////////////////////////////////
@@ -109,25 +149,6 @@ function setTaskLocalStorage(key) {
 }
 
 //////////////////////////////////////////////////////////////////
-
-//////////////////////////////////////////////////////////////////
-////////////////////// DOM OBSERVERS /////////////////////////////
-//////////////////////////////////////////////////////////////////
-
-// Observer to check on DOM updates for COLUMNS
-const colObserver = new MutationObserver(() => {
-  editColBtn = document.querySelectorAll('.edit_col_btn');
-  addTaskBtn = document.querySelectorAll('.add_task');
-  editTask = document.querySelectorAll('.edit-task-btn');
-  taskList = document.querySelectorAll('.task_list');
-  getAllColEditBtn();
-  getAllNewTaskBtns();
-  getAllEditBtns();
-});
-
-colObserver.observe(boardColumnsEl, { childList: true, subtree: true });
-
-///////////////////////////////////////////////////////////////////
 
 // GET TITLE and DESCRIPTION for Task
 function getTaskDetails(editTask) {
