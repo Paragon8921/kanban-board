@@ -30,6 +30,9 @@ let taskType = '';
 let taskTitle = document.getElementById('title-input');
 let taskDescription = document.getElementById('description');
 let deleteColXmark = document.querySelectorAll('.del_col_xmark');
+let dragContainer = document.querySelectorAll('.drag-container');
+let draggables = document.querySelectorAll('.draggable');
+let dragging = false;
 
 //////////////////////////////////////////////////////////////////
 ////////////////////// DOM OBSERVERS /////////////////////////////
@@ -43,10 +46,16 @@ const colObserver = new MutationObserver(() => {
   taskList = document.querySelectorAll('.task_list');
   columnList = document.querySelectorAll('.column');
   deleteColXmark = document.querySelectorAll('.del_col_xmark');
+  dragContainer = document.querySelectorAll('.drag-container');
+  draggables = document.querySelectorAll('.draggable');
+
   getAllColEditBtn();
   getAllNewTaskBtns();
   getAllEditBtns();
   getAllDeleteColBtns();
+  if (dragging === false) {
+    loadDraggables();
+  }
 });
 
 colObserver.observe(boardColumnsEl, { childList: true, subtree: true });
@@ -218,13 +227,14 @@ function addColumn(title, color) {
   </li>
   <li>
     <div class="column-contents custom-scroll">
-      <ul class="task_list"></ul>
+      <ul class="task_list drag-container"></ul>
     </div>
   </li>`;
   boardColumnsEl.append(div);
 }
 
 function storeColumn(e) {
+  
   addColumn(colTitle.value, colColor.value);
   columnArray.push([{ title: colTitle.value, color: colColor.value }]);
   e.preventDefault();
@@ -237,11 +247,12 @@ saveColBtn.addEventListener('click', storeColumn);
 // Add Task
 function addTask(col, title) {
   const li = document.createElement('li');
-  li.className = 'task';
+  li.className = 'task draggable';
+  li.draggable = 'true';
   li.innerHTML = `                  
     <div class="task-contents">
       <span class="task-title">${title}</span>
-      <button class="edit-task-btn">VIEW / EDIT</button>
+      <button class="edit-task-btn">VIEW / EDIT / DELETE</button>
     </div>`;
   taskList[col].append(li);
 }
@@ -290,7 +301,7 @@ function loadSavedState() {
   //COLUMNS
   if (localStorage.getItem('columns')) {
     columnArray = JSON.parse(localStorage.getItem('columns'));
-    columnArray.forEach(col => {
+    columnArray.forEach(col=> {
       addColumn(col[0].title, col[0].color);
     });
 
@@ -345,8 +356,60 @@ addColBtn.addEventListener('click', () => {
   dispalyColModal();
 });
 
+////////////////////////////////////////////////////////////
+//////////////////  DRAG AND DROP //////////////////////////
+////////////////////////////////////////////////////////////
+function loadDraggables() {
+  draggables.forEach(draggable => {
+    draggable.addEventListener('dragstart', () => {
+      draggable.classList.add('dragging');
+    });
+
+    draggable.addEventListener('dragend', () => {
+      draggable.classList.remove('dragging');
+    });
+
+    draggable.addEventListener('drop', () => {
+
+    });
+  });
+
+  dragContainer.forEach(container => {
+    container.addEventListener('dragover', e => {
+      e.preventDefault();
+      dragging = true;
+      const afterElement = getDragAfterElement(container, e.clientY);
+      const dragEl = document.querySelector('.dragging');
+      if (afterElement == null) {
+        container.appendChild(dragEl);
+      } else {
+        container.insertBefore(dragEl, afterElement);
+      }
+    });
+  });
+}
+
+function getDragAfterElement(container, y) {
+  const draggableElement = [
+    ...container.querySelectorAll('.draggable:not(.dragging)'),
+  ];
+
+  return draggableElement.reduce(
+    (closest, child) => {
+      const box = child.getBoundingClientRect();
+      const offset = y - box.top - box.height / 2;
+      if (offset < 0 && offset > closest.offset) {
+        return { offset: offset, element: child };
+      } else {
+        return closest;
+      }
+    },
+    { offset: Number.NEGATIVE_INFINITY }
+  ).element;
+}
+
 // On Load
 loadSavedState();
-getAllColEditBtn();
-getAllNewTaskBtns();
-getAllEditBtns();
+// getAllColEditBtn();
+// getAllNewTaskBtns();
+// getAllEditBtns();

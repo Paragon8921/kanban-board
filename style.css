@@ -219,6 +219,12 @@ body {
   background: rgba(36, 36, 36, 0.207);
 }
 
+.task_list{
+  margin-top: 1rem ;
+  width: 100%;
+  height: 50%;
+}
+
 .task-contents {
   display: flex;
   flex-direction: column;
@@ -293,4 +299,8 @@ body {
 
 .delete_btn {
   background: #9f4545;
+}
+
+.draggable.dragging{
+  opacity: .5;
 }
