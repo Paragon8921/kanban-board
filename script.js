@@ -33,6 +33,8 @@ let deleteColXmark = document.querySelectorAll('.del_col_xmark');
 let dragContainer = document.querySelectorAll('.drag-container');
 let draggables = document.querySelectorAll('.draggable');
 let dragging = false;
+let dragItem = '';
+let hoveringCol = '';
 
 //////////////////////////////////////////////////////////////////
 ////////////////////// DOM OBSERVERS /////////////////////////////
@@ -48,6 +50,7 @@ const colObserver = new MutationObserver(() => {
   deleteColXmark = document.querySelectorAll('.del_col_xmark');
   dragContainer = document.querySelectorAll('.drag-container');
   draggables = document.querySelectorAll('.draggable');
+  hoveringCol = document.querySelector('.hovering');
 
   getAllColEditBtn();
   getAllNewTaskBtns();
@@ -215,7 +218,7 @@ function dispalyColModal() {
 /////////////////////////////////////////////////////////////////
 
 // Add Column
-function addColumn(title, color) {
+function addColumn(title, color, col) {
   const div = document.createElement('div');
   div.className = 'column';
   div.innerHTML = `
@@ -227,14 +230,13 @@ function addColumn(title, color) {
   </li>
   <li>
     <div class="column-contents custom-scroll">
-      <ul class="task_list drag-container"></ul>
+      <ul class="task_list drag-container" data-column="${col}"></ul>
     </div>
   </li>`;
   boardColumnsEl.append(div);
 }
 
 function storeColumn(e) {
-  
   addColumn(colTitle.value, colColor.value);
   columnArray.push([{ title: colTitle.value, color: colColor.value }]);
   e.preventDefault();
@@ -245,12 +247,12 @@ function storeColumn(e) {
 saveColBtn.addEventListener('click', storeColumn);
 
 // Add Task
-function addTask(col, title) {
+function addTask(col, title, i) {
   const li = document.createElement('li');
   li.className = 'task draggable';
   li.draggable = 'true';
   li.innerHTML = `                  
-    <div class="task-contents">
+    <div class="task-contents" data-taskIndex="${i}">
       <span class="task-title">${title}</span>
       <button class="edit-task-btn">VIEW / EDIT / DELETE</button>
     </div>`;
@@ -259,12 +261,13 @@ function addTask(col, title) {
 
 function storeTask(e) {
   // enable to test in console
-  e.preventDefault();
+  // e.preventDefault();
 
   if (taskType === 'new') {
-    addTask(currentCol, taskTitle.value);
+    addTask(currentCol, taskTitle.value, taskArray.length);
     taskArray.push({
       column: currentCol,
+      taskArrPos: taskArray.length,
       title: taskTitle.value,
       description: taskDescription.value,
     });
@@ -301,8 +304,8 @@ function loadSavedState() {
   //COLUMNS
   if (localStorage.getItem('columns')) {
     columnArray = JSON.parse(localStorage.getItem('columns'));
-    columnArray.forEach(col=> {
-      addColumn(col[0].title, col[0].color);
+    columnArray.forEach((col, i) => {
+      addColumn(col[0].title, col[0].color, i);
     });
 
     // TASKS
@@ -310,7 +313,7 @@ function loadSavedState() {
     if (localStorage.getItem('tasks')) {
       taskArray = JSON.parse(localStorage.getItem('tasks'));
       taskArray.forEach(taskItem => {
-        addTask(taskItem.column, taskItem.title);
+        addTask(taskItem.column, taskItem.title, taskItem.taskArrPos);
       });
     }
   }
@@ -363,14 +366,11 @@ function loadDraggables() {
   draggables.forEach(draggable => {
     draggable.addEventListener('dragstart', () => {
       draggable.classList.add('dragging');
+      dragItem = document.querySelector('.dragging').firstElementChild;
     });
 
     draggable.addEventListener('dragend', () => {
       draggable.classList.remove('dragging');
-    });
-
-    draggable.addEventListener('drop', () => {
-
     });
   });
 
@@ -385,6 +385,21 @@ function loadDraggables() {
       } else {
         container.insertBefore(dragEl, afterElement);
       }
+      container.classList.add('hovering');
+      hoveringCol = document.querySelector('.hovering');
+    });
+
+    container.addEventListener('drop', () => {
+      container.classList.remove('hovering');
+      console.log(dragItem.dataset.taskindex);
+      console.log(taskArray[dragItem.dataset.taskindex].column);
+      console.log(hoveringCol.dataset.column);
+      taskArray[dragItem.dataset.taskindex].column = hoveringCol.dataset.column;
+      setTaskLocalStorage('tasks');
+    });
+
+    container.addEventListener('dragleave', () => {
+      container.classList.remove('hovering');
     });
   });
 }
