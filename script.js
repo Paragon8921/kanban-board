@@ -359,6 +359,19 @@ addColBtn.addEventListener('click', () => {
   dispalyColModal();
 });
 
+///////////////////////////////////////////////////////////
+////////////////// Re-Order TaskArray /////////////////////
+//////////////////////////////////////////////////////////
+function reArrangeTaskArray() {
+  const taskContents = document.querySelectorAll('.task-contents');
+  const dummyArr = [];
+  taskContents.forEach((task, i) => {
+    dummyArr.push(taskArray[task.dataset.taskindex]);
+    dummyArr[i].taskArrPos = i;
+  });
+  taskArray = dummyArr;
+}
+
 ////////////////////////////////////////////////////////////
 //////////////////  DRAG AND DROP //////////////////////////
 ////////////////////////////////////////////////////////////
@@ -391,10 +404,9 @@ function loadDraggables() {
 
     container.addEventListener('drop', () => {
       container.classList.remove('hovering');
-      console.log(dragItem.dataset.taskindex);
-      console.log(taskArray[dragItem.dataset.taskindex].column);
-      console.log(hoveringCol.dataset.column);
       taskArray[dragItem.dataset.taskindex].column = hoveringCol.dataset.column;
+
+      reArrangeTaskArray();
       setTaskLocalStorage('tasks');
     });
 
